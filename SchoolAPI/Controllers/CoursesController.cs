@@ -44,12 +44,8 @@ namespace SchoolAPI.Controllers
             // Cette ligne n'est pas utile, on a déjà récupéré le service plus haut
             // UserServices test = new();
 
-<<<<<<< Updated upstream
             // On renvoie la liste des utilisateurs présents dans le service
-            return (UserService.Users);
-=======
-            return UserServices services;
->>>>>>> Stashed changes
+            return UserService.Users;
         }
 
     }
