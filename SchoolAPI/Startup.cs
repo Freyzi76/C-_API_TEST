@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SchoolAPI.Controllers;
+using SchoolAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,9 @@ namespace SchoolAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SchoolAPI", Version = "v1" });
             });
 
+            services.AddScoped<JWTService>();
+
+            services.AddSingleton<UserServices>();
 
             services.AddAuthentication(option =>
             {
@@ -42,11 +46,11 @@ namespace SchoolAPI
                 option.DefaultChallengeScheme = "JwtBearer";
             })
             .AddJwtBearer("JwtBearer", jwtOptions => {
-
+                
                 jwtOptions.TokenValidationParameters = new TokenValidationParameters()
                 {
 
-                    IssuerSigningKey = GiveTokenController.SIGNING_KEY,
+                    IssuerSigningKey = JWTService.GetSigningKey(),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateIssuerSigningKey = true,

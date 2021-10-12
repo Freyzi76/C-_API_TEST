@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "DE CAMPOS",
+    "Surname": "Armelio",
+    "Techno": "Python"
+  },
+  {
+    "Name": "CARLUS",
+    "Surname": "Thomas",
+    "Techno": "C#"
+  },
+  {
+    "Name": "COUTO DE OLIVEIRA",
+    "Surname": "Dylan",
+    "Techno": "Python"
+  },
+  {
+    "Name": "MASSE",
+    "Surname": "Raphaël",
+    "Techno": "PHP"
+  },
+  {
+    "Name": "NGUYEN",
+    "Surname": "Timothée",
+    "Techno": "C#"
+  },
+  {
+    "Name": "HENRIQUES",
+    "Surname": "Sylvio",
+    "Techno": "VBA.Net"
+  }
+]
