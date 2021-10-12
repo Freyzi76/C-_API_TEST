@@ -8,11 +8,11 @@ namespace SchoolAPI.Models
     public class UserModel
     {
 
-        public string Name;
-        public string Firstname;
-        public string Email;
-        public string Password;
-        public string Create_at;
+        public string Name { get; set; }
+        public string Firstname { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Create_at { get; set; }
 
     }
 }
