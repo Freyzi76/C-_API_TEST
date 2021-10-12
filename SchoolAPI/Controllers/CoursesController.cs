@@ -15,6 +15,16 @@ namespace SchoolAPI.Controllers
     
     public class CoursesController : ControllerBase
     {
+        // On déclare une variable pour stocker l'instance de notre Service
+        public UserServices UserService;
+
+        // On déclare un constructeur qui prend en paramètre notre service
+        // L'injection de dépendance l'injectera dans notre constructeur
+        public CoursesController(UserServices userServices)
+        {
+            // On assigne la référence reçue à notre variable locale pour l'utiliser dans le controller
+            UserService = userServices;
+        }
 
         [HttpGet]
         [Route("test")]
@@ -28,12 +38,14 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("users")]
-        public object GetUsers()
+        // Cette méthode nous renvoie la liste des Users, c'est une Collection (IEnumerable)
+        public IEnumerable<UserModel> GetUsers()
         {
+            // Cette ligne n'est pas utile, on a déjà récupéré le service plus haut
+            // UserServices test = new();
 
-            UserServices test = new();
-
-            return "users " + test.Users;
+            // On renvoie la liste des utilisateurs présents dans le service
+            return (UserService.Users);
         }
 
     }
