@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolAPI.Models;
 using SchoolAPI.Services;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,11 +43,40 @@ namespace SchoolAPI.Controllers
         public IEnumerable<UserModel> GetUsers()
         {
             // Cette ligne n'est pas utile, on a déjà récupéré le service plus haut
-            // UserServices test = new();
+             UserServices test = new();
+
+            string name = "DECAMPOS";
+
+            object result = test.Users.FirstOrDefault(i => i.Name == name);
 
             // On renvoie la liste des utilisateurs présents dans le service
-            return UserService.Users;
+
+            //Console.WriteLine(test.Users);
+
+
+                return test.Users;
+
+
         }
+
+
+
+        [HttpGet]
+        [Route("users2")]
+        public object GetUser()
+        {
+
+            var test = UserService.Users.Select(user => user.Name) as IEnumerable;
+
+            var test2 = UserService.Users.Select(i => i.Name == "DElArimos") as IEnumerable;
+
+            return test2;
+
+
+
+        }
+
+
 
     }
 }

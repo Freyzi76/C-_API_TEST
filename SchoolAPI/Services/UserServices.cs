@@ -16,6 +16,8 @@ namespace SchoolAPI.Services
 
         public IEnumerable<UserModel> Users;
 
+        public object tableau;
+
 
         public UserServices()
         {
@@ -23,6 +25,10 @@ namespace SchoolAPI.Services
             string text = File.ReadAllText("Users.json");
 
             Users = JsonConvert.DeserializeObject<IEnumerable<UserModel>>(text);
+
+            tableau = JsonConvert.DeserializeObject(text);
+
+            //Console.WriteLine(tableau);
 
         }
 
