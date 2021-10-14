@@ -60,6 +60,8 @@ namespace SchoolAPI.Controllers
         }
 
 
+        public string test4 = "OK";
+
 
         [HttpGet]
         [Route("users2")]
@@ -68,11 +70,12 @@ namespace SchoolAPI.Controllers
 
             var test = UserService.Users.Select(user => user.Name) as IEnumerable;
 
-            var test2 = UserService.Users.Select(i => i.Name == "DElArimos") as IEnumerable;
+            var test2 = UserService.Users.Select(i => i.Name == "DElArimos").ToList() as IEnumerable;
+
+
+            IList list = UserService.Users.ToList();
 
             return test2;
-
-
 
         }
 
