@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SchoolAPI.Models;
 
 namespace SchoolAPI.Controllers
 {
@@ -31,25 +32,21 @@ namespace SchoolAPI.Controllers
         [Route("login/{username}/{password}")]
         public IActionResult UserLogin(string username, string password)
         {
+            if (username == null || password == null)
+                return (BadRequest());
 
-            if (username != null && password != null)
-            {
+            UserModel user = UserService.Users.FirstOrDefault(i => i.Email == username);
+                
+            // verifier que l'utilisateur existe SINON << return BadRequest();
+            if (user == null)
+                return (BadRequest());
 
-                // verifier que l'utilisateur existe SINON << return BadRequest();
+            // si l'utilisateur existe verifier que c'est le mot de passe qui correspond a cet username SINON << return BadRequest();
+            if (user.Password != password)
+                return (BadRequest());
 
-                    // si l'utilisateur existe verifier que c'est le mot de passe qui correspond a cet username SINON << return BadRequest();
-
-                         // si le mot de passe correspond a l'utilisateur alors ont << return new ObjectResult(JWTService.GenerateToken(username));
-
-            }
-            else
-            {
-
-                return BadRequest();
-
-            }
-
-
+            // si le mot de passe correspond a l'utilisateur alors ont << return new ObjectResult(JWTService.GenerateToken(username));
+            return new ObjectResult(JWTService.GenerateToken(username));
         }
 
     }
