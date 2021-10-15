@@ -68,7 +68,6 @@ namespace SchoolAPI.Controllers
         public object GetUser()
         {
 
-<<<<<<< Updated upstream
             var test = UserService.Users.Select(user => user.Name) as IEnumerable;
 
             var test2 = UserService.Users.Select(i => i.Name == "DElArimos").ToList() as IEnumerable;
@@ -78,9 +77,6 @@ namespace SchoolAPI.Controllers
 
             return test2;
 
-=======
-            return UserServices services;
->>>>>>> Stashed changes
         }
 
 

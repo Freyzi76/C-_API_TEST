@@ -47,14 +47,11 @@ namespace SchoolAPI.Controllers
                 return (BadRequest());
 
 
-            var Content = new ObjectResult(JWTService.GenerateToken(username)).Value.ToString();
-
-
-            var json = JsonConvert.SerializeObject("Content:" + Content.ToString());
+            var Content = new ObjectResult(JWTService.GenerateToken(username));
 
 
             // si le mot de passe correspond a l'utilisateur alors ont << return new ObjectResult(JWTService.GenerateToken(username));
-            return json;
+            return Content;
         }
 
     }
