@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SchoolAPI.Models;
+using Newtonsoft.Json;
 
 namespace SchoolAPI.Controllers
 {
@@ -30,7 +31,7 @@ namespace SchoolAPI.Controllers
 
         [HttpGet]
         [Route("login/{username}/{password}")]
-        public IActionResult UserLogin(string username, string password)
+        public object UserLogin(string username, string password)
         {
             if (username == null || password == null)
                 return (BadRequest());
@@ -45,8 +46,15 @@ namespace SchoolAPI.Controllers
             if (user.Password != password)
                 return (BadRequest());
 
+
+            var Content = new ObjectResult(JWTService.GenerateToken(username)).Value.ToString();
+
+
+            var json = JsonConvert.SerializeObject("Content:" + Content.ToString());
+
+
             // si le mot de passe correspond a l'utilisateur alors ont << return new ObjectResult(JWTService.GenerateToken(username));
-            return new ObjectResult(JWTService.GenerateToken(username));
+            return json;
         }
 
     }

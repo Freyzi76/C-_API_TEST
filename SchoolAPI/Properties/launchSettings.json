@@ -2,9 +2,13 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/SchoolAPI",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:80",
-      "sslPort": 44340
+      "applicationUrl": "http://localhost:44340",
+      "sslPort": 44341
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -25,7 +29,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": "true",
-      "applicationUrl": "http://localhost:80"
+      "applicationUrl": "http://192.168.1.82:80"
     }
   }
 }
