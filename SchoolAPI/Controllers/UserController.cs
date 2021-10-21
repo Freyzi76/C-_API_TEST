@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using SchoolAPI.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using System.IO;
 
 namespace SchoolAPI.Controllers
 {
@@ -53,6 +55,172 @@ namespace SchoolAPI.Controllers
             // si le mot de passe correspond a l'utilisateur alors ont << return new ObjectResult(JWTService.GenerateToken(username));
             return Content;
         }
+
+
+
+        [HttpGet]
+       // [Authorize]
+        [Route("users")]
+        public IEnumerable<UserModel> GetUsers()
+        {
+
+            return UserService.Users;
+
+
+        }
+
+
+
+
+        [HttpGet]
+        [Authorize]
+        [Route("ModifyUser/{Email}")]
+        public object ModifyUser(string Email)
+        {
+            if (Email == null )
+                return (BadRequest());
+
+            UserModel user = UserService.Users.FirstOrDefault(i => i.Email == Email);
+
+            // verifier que l'utilisateur existe SINON << return BadRequest();
+            if (user == null)
+                return (BadRequest());
+
+
+            return user;
+        }
+
+        
+        [HttpGet]
+        [Authorize]
+        [Route("ExecuteManageUser/{Email}/{Name}/{Firstname}/{EmailNew}/{ResetPassword}/{IsNewUser}")]
+        public object ExecuteModifyUser(string Email, string Name, string Firstname, string EmailNew, bool ResetPassword, bool IsNewUser)
+        {
+
+
+            UserModel VerifyEmailUser = UserService.Users.FirstOrDefault(i => i.Email == EmailNew);
+
+            DateTime localDate = DateTime.Now;
+
+            List<IndexModel> GetOldIndex = UserService.Index.ToList();
+
+            if (IsNewUser == true && EmailNew == "New")
+            {
+
+                UserModel IfUserExist = UserService.Users.FirstOrDefault(i => i.Email == Email);
+
+                if (IfUserExist == null)
+                {
+
+                    GetOldIndex[0].NumberOfId = GetOldIndex[0].NumberOfId + 1;
+
+                    var IndexIncrement = GetOldIndex[0].NumberOfId;
+
+
+                    UserModel NewUser = new UserModel
+                    {
+
+                        Id = IndexIncrement,
+                        Name = Name,
+                        Firstname = Firstname,
+                        Email = Email,
+                        Password = "0123456789",
+                        Create_at = localDate.ToString(),
+
+                    };
+
+                    List<UserModel> GetOldList = UserService.Users.ToList();
+
+                    GetOldList.Add(NewUser);
+
+
+                    new UserServices.UserServicesReWrite(GetOldList, GetOldIndex);
+
+                    UserService.Users = GetOldList;
+
+
+                    return "OK";
+
+                }
+                else
+                {
+                    return "NOTOK";
+                }
+
+            }
+            else
+            {
+
+                if (Email == null)
+                    return (BadRequest());
+
+                UserModel user = UserService.Users.FirstOrDefault(i => i.Email == Email);
+
+                // verifier que l'utilisateur existe SINON << return BadRequest();
+                if (user == null)
+
+                    return (BadRequest());
+
+
+
+                if (VerifyEmailUser == null || VerifyEmailUser.Id == user.Id)
+                {
+
+                    user.Name = Name;
+
+                    user.Firstname = Firstname;
+
+                    user.Email = EmailNew;
+
+                    new UserServices.UserServicesReWrite(UserService.Users, GetOldIndex);
+
+                    return "OK";
+
+                }
+                else
+                {
+                    return "NOTOK";
+                }
+
+            }
+
+
+
+        }
+
+
+
+
+        [HttpGet]
+        [Authorize]
+        [Route("SuppUser/{Email}")]
+        public object SuppUser(string Email)
+        {
+            if (Email == null)
+                return (BadRequest());
+
+            UserModel user = UserService.Users.FirstOrDefault(i => i.Email == Email);
+
+            // verifier que l'utilisateur existe SINON << return BadRequest();
+            if (user == null)
+
+                return (BadRequest());
+
+            var UserList = UserService.Users.ToList();
+
+            UserList.Remove(UserList.FirstOrDefault(i => i.Email == Email));
+
+
+            UserService.Users = UserList;
+
+
+            return "OK";
+
+
+
+
+        }
+
 
     }
 }
